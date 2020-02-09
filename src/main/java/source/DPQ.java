@@ -22,19 +22,19 @@ public class DPQ {
     } 
   
     // Function for Dijkstra's Algorithm 
-    public void dijkstra(List<List<Node> > adj, int src) 
+    public void dijkstra(List<List<Node> > adj, int src,int salida) 
     { 
         this.adj = adj; 
   
         for (int i = 0; i < V; i++) 
-            dist[i].add(new Node(src, 100000)); 
+            dist[i].add(new Node(src, 100000,1)); 
   
         // Add source node to the priority queue 
-        pq.add(new Node(src, 0)); 
+        pq.add(new Node(src, 0,salida)); 
   
         // Distance to the source is 0 
         Distance foo = new Distance();
-        foo.add(new Node (src,0));
+        foo.add(new Node (src,0,salida));
         dist[src] = foo;
         while (settled.size() != V) { 
   
@@ -55,7 +55,6 @@ public class DPQ {
     private void e_Neighbours(int u) 
     { 
         Distance newDistance = new Distance(); 
-  
         // All the neighbors of v 
         for (int i = 0; i < adj.get(u).size(); i++) { 
             Node v = adj.get(u).get(i); 
@@ -65,14 +64,17 @@ public class DPQ {
                 //newDistance = dist[u] + edgeDistance; 
                 newDistance = dist[u].copy();
                 newDistance.add(v);
-  
-                // If new distance is cheaper in cost 
-                //if (newDistance < dist[v.node]) 
+                //if you can't get to the last route because it departs before you arrive
+                if (v.salida < dist[u].get_cost()){
+                    continue;
+                }
+                    
+                // If new distance is cheaper in cost  
                 if (newDistance.is_less(dist[v.node]))
                     dist[v.node] = newDistance; 
   
                 // Add the current node to the queue 
-                pq.add(new Node(v.node, dist[v.node].get_cost())); 
+                pq.add(new Node(v.node, dist[v.node].get_cost(),0)); 
             } 
         } 
     } 
@@ -93,17 +95,17 @@ public class DPQ {
         } 
   
         // Inputs for the DPQ graph 
-        adj.get(0).add(new Node(1, 9)); 
-        adj.get(0).add(new Node(2, 6)); 
-        adj.get(0).add(new Node(3, 5)); 
-        adj.get(0).add(new Node(4, 3)); 
-  
-        adj.get(2).add(new Node(1, 2)); 
-        adj.get(2).add(new Node(3, 4)); 
-  
+        adj.get(0).add(new Node(1, 9,0)); 
+        adj.get(0).add(new Node(2, 6,1)); 
+        adj.get(0).add(new Node(3, 5,1)); 
+        adj.get(0).add(new Node(4, 3,1)); 
+        adj.get(2).add(new Node(1, 2,1)); 
+        adj.get(2).add(new Node(3, 4,1)); 
+        adj.get(4).add(new Node(3, 1,3));
         // Calculate the single source shortest path 
         DPQ dpq = new DPQ(V); 
-        dpq.dijkstra(adj, source); 
+        int salida=0;
+        dpq.dijkstra(adj, source, salida);  
   
         // Print the shortest path to all the nodes 
         // from the source node 

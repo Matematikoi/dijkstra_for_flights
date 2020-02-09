@@ -4,16 +4,17 @@ import java.util.Comparator;
 
 class Node implements Comparator<Node> { 
     public int node; 
-    public int cost; 
-  
+    public int cost;
+    public int salida;
     public Node() 
     { 
     } 
   
-    public Node(int node, int cost) 
+    public Node(int node, int cost,int salida) 
     { 
         this.node = node; 
         this.cost = cost; 
+        this.salida = salida; 
     } 
     
     @Override

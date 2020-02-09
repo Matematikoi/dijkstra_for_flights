@@ -33,8 +33,16 @@ class Distance  {
     public String to_String(){
         String s = "";
         for (Node nodo : this.recorrido){
-            s+= "\ndestino: "+nodo.node+" ,costo: "+nodo.cost;
+            s+= "\ndestino: "+nodo.node+" ,costo: "+nodo.cost+", salida: "+nodo.salida;
         }
         return s;
+    }
+
+    int get_last_salida() {
+        return this.recorrido.get(this.recorrido.size()-1).salida;
+    }
+
+    int get_total_time() {
+        return this.get_last_salida()+this.recorrido.get(this.recorrido.size()-1).cost;
     }
 }
