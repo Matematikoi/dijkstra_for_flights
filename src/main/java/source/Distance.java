@@ -9,15 +9,24 @@ class Distance  {
     public Distance() {
         recorrido = new ArrayList<Node>();
     }
-    public void add(Node n){
+    public boolean add(Node n){
+        if (this.recorrido.size() !=0 ){
+            if ( this.get_total_time()>n.salida)
+                return false;
+        }
         recorrido.add(n);
+        return true;
     }
     public int get_cost(){
+        return this.get_total_time();
+        
+        
+        /*
         int result = 0;
         for (Node nodo : this.recorrido){
             result += nodo.cost;
         }
-        return result;
+        return result;*/
     }
     public boolean is_less(Distance d){
         return this.get_cost()<d.get_cost();

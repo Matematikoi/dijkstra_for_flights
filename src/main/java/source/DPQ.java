@@ -95,11 +95,11 @@ public class DPQ {
         } 
   
         // Inputs for the DPQ graph 
-        adj.get(0).add(new Node(1, 9,0)); 
+        adj.get(0).add(new Node(1, 10,0)); 
         adj.get(0).add(new Node(2, 6,1)); 
         adj.get(0).add(new Node(3, 5,1)); 
-        adj.get(0).add(new Node(4, 3,1)); 
-        adj.get(2).add(new Node(1, 2,1)); 
+        adj.get(0).add(new Node(4, 2,0)); 
+        adj.get(2).add(new Node(1, 2,7)); 
         adj.get(2).add(new Node(3, 4,1)); 
         adj.get(4).add(new Node(3, 1,3));
         // Calculate the single source shortest path 
